@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2 ЖИ — Python зертханасы</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #101936, #182d5c, #263f7a);
+    color: white;
+    min-height: 100vh;
+}
+
+.container {
+    width: 92%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 25px 0;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 38px;
+    margin: 10px;
+}
+
+header p {
+    font-size: 18px;
+    color: #d9e4ff;
+}
+
+.ai-area {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.card {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 25px;
+    padding: 25px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+.ai-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.robot {
+    width: 70px;
+    height: 70px;
+}
+
+.ai-title h2 {
+    margin: 0;
+    font-size: 25px;
+}
+
+.question {
+    background: rgba(0,0,0,0.2);
+    padding: 18px;
+    border-radius: 15px;
+    margin: 20px 0;
+    line-height: 1.6;
+}
+
+textarea {
+    width: 100%;
+    height: 180px;
+    resize: vertical;
+    background: #0c1329;
+    color: #8df5ff;
+    border: 2px solid #405b9a;
+    border-radius: 15px;
+    padding: 15px;
+    font-size: 16px;
+    font-family: Consolas, monospace;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: 2px solid #405b9a;
+    background: #0c1329;
+    color: white;
+    font-size: 16px;
+}
+
+button {
+    border: none;
+    border-radius: 12px;
+    padding: 13px 20px;
+    margin-top: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.solve {
+    background: #35d07f;
+    color: #062b18;
+}
+
+.check {
+    background: #ffb84d;
+    color: #352000;
+}
+
+.next {
+    background: #8b7cff;
+    color: white;
+}
+
+.result {
+    min-height: 45px;
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.2);
+}
+
+.correct {
+    color: #61ff9a;
+}
+
+.wrong {
+    color: #ff7070;
+}
+
+.score {
+    text-align: center;
+    margin-top: 25px;
+    background: rgba(255,255,255,0.1);
+    padding: 18px;
+    border-radius: 18px;
+    font-size: 22px;
+}
+
+.animation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 130px;
+}
+
+#message {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+@media(max-width: 800px) {
+    .ai-area {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 28px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <h1>🤖 2 ЖИ — Python зертханасы</h1>
+    <p>Есепті шығар • Кодтағы қатені тап • Ұпай жина</p>
+</header>
+
+<div class="ai-area">
+
+<!-- 1-ЖИ -->
+<div class="card">
+
+    <div class="ai-title">
+
+        <svg class="robot" viewBox="0 0 100 100">
+
+            <rect x="15" y="25"
+                  width="70" height="55"
+                  rx="15"
+                  fill="#586cff"/>
+
+            <circle cx="35" cy="50"
+                    r="7"
+                    fill="white"/>
+
+            <circle cx="65" cy="50"
+                    r="7"
+                    fill="white"/>
+
+            <rect x="35" y="65"
+                  width="30"
+                  height="5"
+                  rx="3"
+                  fill="white"/>
+
+            <line x1="50" y1="25"
+                  x2="50" y2="10"
+                  stroke="white"
+                  stroke-width="4"/>
+
+            <circle cx="50" cy="8"
+                    r="5"
+                    fill="#ffcf4a"/>
+
+        </svg>
+
+        <div>
+            <h2>1-ЖИ</h2>
+            <p>Python есебін береді</p>
+        </div>
+
+    </div>
+
+    <div class="question">
+        <b>Есеп №1</b>
+        <br><br>
+        Екі сан берілген: <b>15</b> және <b>7</b>.
+        Олардың қосындысын Python арқылы есепте.
+    </div>
+
+    <input
+        id="answer"
+        type="number"
+        placeholder="Жауабыңды енгіз..."
+    >
+
+    <button class="solve" onclick="checkAnswer()">
+        ✓ Жауапты тексеру
+    </button>
+
+    <div id="answerResult" class="result"></div>
+
+</div>
+
+
+<!-- 2-ЖИ -->
+<div class="card">
+
+    <div class="ai-title">
+
+        <svg class="robot" viewBox="0 0 100 100">
+
+            <rect x="15" y="25"
+                  width="70" height="55"
+                  rx="15"
+                  fill="#ff6b8a"/>
+
+            <circle cx="35" cy="50"
+                    r="7"
+                    fill="white"/>
+
+            <circle cx="65" cy="50"
+                    r="7"
+                    fill="white"/>
+
+            <path d="M35 67 Q50 57 65 67"
+                  stroke="white"
+                  stroke-width="5"
+                  fill="none"/>
+
+            <line x1="50" y1="25"
+                  x2="50" y2="10"
+                  stroke="white"
+                  stroke-width="4"/>
+
+            <circle cx="50" cy="8"
+                    r="5"
+                    fill="#ffcf4a"/>
+
+        </svg>
+
+        <div>
+            <h2>2-ЖИ</h2>
+            <p>Python кодындағы қатені тап</p>
+        </div>
+
+    </div>
+
+    <div class="question">
+
+        <b>Кодтағы қатені анықта:</b>
+
+        <pre style="color:#8df5ff;">
+a = 10
+b = 5
+sum = a + b
+print("Қосынды:", sum
+        </pre>
+
+        <p>
+            Бұл кодта бір синтаксистік қате бар.
+            Қатені түзетіп, төмендегі жерге жаз.
+        </p>
+
+    </div>
+
+    <textarea id="codeAnswer"
+placeholder="Мысалы:
+print('Hello')"></textarea>
+
+    <button class="check" onclick="checkCode()">
+        🔍 Кодты тексеру
+    </button>
+
+    <div id="codeResult" class="result"></div>
+
+</div>
+
+</div>
+
+
+<!-- SVG АНИМАЦИЯ -->
+
+<div class="card" style="margin-top:25px;">
+
+<h2 style="text-align:center;">
+    🤖 ЖИ реакциясы
+</h2>
+
+<div class="animation">
+
+<svg id="reaction" width="180" height="120"
+     viewBox="0 0 180 120">
+
+    <circle cx="90"
+            cy="60"
+            r="45"
+            fill="#334a91"/>
+
+    <circle cx="72"
+            cy="52"
+            r="7"
+            fill="white"/>
+
+    <circle cx="108"
+            cy="52"
+            r="7"
+            fill="white"/>
+
+    <path id="mouth"
+          d="M70 75 Q90 75 110 75"
+          stroke="white"
+          stroke-width="5"
+          fill="none"/>
+
+</svg>
+
+</div>
+
+<div id="message">
+    Тапсырманы орындауға дайынсың ба? 🚀
+</div>
+
+</div>
+
+
+<!-- ҰПАЙ -->
+
+<div class="score">
+
+    ⭐ Ұпай:
+    <span id="score">0</span>
+
+    / 2
+
+</div>
+
+<br>
+
+<div style="text-align:center;">
+
+<button class="next" onclick="newTask()">
+    🔄 Жаңа тапсырма
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+let score = 0;
+
+
+// 1-ЖИ: есепті тексеру
+
+function checkAnswer() {
+
+    const answer =
+        Number(document.getElementById("answer").value);
+
+    const result =
+        document.getElementById("answerResult");
+
+    if (answer === 22) {
+
+        result.innerHTML =
+            "✅ Дұрыс! 15 + 7 = 22";
+
+        result.className =
+            "result correct";
+
+        successAnimation();
+
+        if (!localStorage.getItem("task1")) {
+
+            score++;
+
+            localStorage.setItem("task1", "true");
+
+            updateScore();
+        }
+
+    } else {
+
+        result.innerHTML =
+            "❌ Қате. Қайта есептеп көр!";
+
+        result.className =
+            "result wrong";
+
+        errorAnimation();
+    }
+}
+
+
+// 2-ЖИ: код қатесін тексеру
+
+function checkCode() {
+
+    const code =
+        document.getElementById("codeAnswer").value;
+
+    const result =
+        document.getElementById("codeResult");
+
+    /*
+       Дұрыс кодта print функциясының
+       жабылатын жақшасы болуы керек.
+    */
+
+    if (
+        code.includes('print("Қосынды:", sum)')
+        ||
+        code.includes("print('Қосынды:', sum)")
+        ||
+        code.includes("print(\"Қосынды:\", sum)")
+    ) {
+
+        result.innerHTML =
+            "🎉 Дұрыс! print() функциясының жабылатын жақшасы жетіспеген.";
+
+        result.className =
+            "result correct";
+
+        successAnimation();
+
+        if (!localStorage.getItem("task2")) {
+
+            score++;
+
+            localStorage.setItem("task2", "true");
+
+            updateScore();
+        }
+
+    } else {
+
+        result.innerHTML =
+            "❌ Қате. print() функциясының жақшаларын тексер.";
+
+        result.className =
+            "result wrong";
+
+        errorAnimation();
+    }
+}
+
+
+// Ұпайды жаңарту
+
+function updateScore() {
+
+    document.getElementById("score").innerText =
+        score;
+}
+
+
+// Дұрыс жауап анимациясы
+
+function successAnimation() {
+
+    const svg =
+        document.getElementById("reaction");
+
+    const mouth =
+        document.getElementById("mouth");
+
+    svg.style.transform =
+        "scale(1.15)";
+
+    svg.style.transition =
+        "0.3s";
+
+    mouth.setAttribute(
+        "d",
+        "M65 70 Q90 95 115 70"
+    );
+
+    document.getElementById("message").innerHTML =
+        "🎉 Керемет! Дұрыс жауап!";
+
+    setTimeout(() => {
+
+        svg.style.transform =
+            "scale(1)";
+
+    }, 400);
+}
+
+
+// Қате жауап анимациясы
+
+function errorAnimation() {
+
+    const svg =
+        document.getElementById("reaction");
+
+    const mouth =
+        document.getElementById("mouth");
+
+    svg.style.transform =
+        "translateX(-8px)";
+
+    setTimeout(() => {
+
+        svg.style.transform =
+            "translateX(8px)";
+
+    }, 100);
+
+    setTimeout(() => {
+
+        svg.style.transform =
+            "translateX(0)";
+
+    }, 200);
+
+    mouth.setAttribute(
+        "d",
+        "M65 85 Q90 65 115 85"
+    );
+
+    document.getElementById("message").innerHTML =
+        "💡 Қайта байқап көр!";
+}
+
+
+// Жаңа тапсырма
+
+function newTask() {
+
+    document.getElementById("answer").value = "";
+
+    document.getElementById("codeAnswer").value = "";
+
+    document.getElementById("answerResult").innerHTML = "";
+
+    document.getElementById("codeResult").innerHTML = "";
+
+    document.getElementById("message").innerHTML =
+        "🚀 Жаңа тапсырмаға дайындал!";
+
+    const reaction =
+        document.getElementById("reaction");
+
+    reaction.style.transform =
+        "scale(1)";
+
+    localStorage.removeItem("task1");
+    localStorage.removeItem("task2");
+
+    score = 0;
+
+    updateScore();
+}
+
+</script>
+
+</body>
+</html>
